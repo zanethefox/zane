@@ -23,7 +23,7 @@ import { socialLinks } from '@/composables/socials';
         <div>
           <hr class="text-neutral-200 my-10" />
         </div>
-        <div class="text-xl flex flex-col gap-6 mb-24">
+        <div id="about" class="text-xl flex flex-col gap-6 mb-24">
           <p class="text-3xl">こんにちは</p>
           <p>I’m Zane, a fox that enjoys photography, gaming and coffee.</p>
           <p>

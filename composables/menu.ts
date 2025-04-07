@@ -8,8 +8,7 @@ export interface MenuItem {
 
 export const mainMenu: MenuItem[] = [
   { title: 'Home', href: '/' },
-  { title: 'About', href: '/about' },
+  { title: 'Portfolio', href: '/portfolio' },
   { title: 'Socials', href: '/socials' },
-  { title: 'Portfolio', href: '/socials' },
-  { title: 'Blog', href: '/blog' }
+  { title: 'Contact', href: '/contact' }
 ];
