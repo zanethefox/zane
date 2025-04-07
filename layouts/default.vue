@@ -5,8 +5,10 @@
     <Menu />
 
     <main class="w-full flex-auto">
-      <slot></slot>
+      <slot />
     </main>
+
+    <Footer />
   </div>
 </template>
 
