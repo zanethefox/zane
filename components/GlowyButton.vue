@@ -38,7 +38,7 @@ function hideGlow() {
   <component
     :is="tag"
     :class="sizeClasses"
-    class="relative overflow-hidden rounded-full border-1 border-neutral-900 bg-neutral-900 text-white font-medium transition hover:bg-neutral-800 active:scale-[0.98]"
+    class="relative overflow-hidden rounded-full border-1 border-neutral-900 bg-neutral-900 text-white font-medium transition hover:bg-neutral-800 hover:text-shadow-black/10 text-shadow-lg active:scale-[0.98] ring-1 shadow-md ring-neutral-500/15 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_4px_1px_#ffffff4d]"
     @mousemove="updateGlow"
     @mouseleave="hideGlow">
     <span class="relative z-10">

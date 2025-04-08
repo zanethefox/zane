@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { socialLinks } from '@/composables/socials';
+useSeoMeta({
+  title: 'Social — ZaneTheFox.com',
+  ogTitle: 'Social — ZaneTheFox.com',
+  description: 'Connect with Zane across the web. Find links to social profiles, and where to get in touch.',
+  ogDescription: 'Connect with Zane across the web. Find links to social profiles, and where to get in touch.'
+});
 </script>
 
 <template>
@@ -8,7 +14,12 @@ import { socialLinks } from '@/composables/socials';
       <div class="mx-auto max-w-2xl flex flex-col gap-12">
         <div class="flex flex-col gap-4 items-center justify-center w-full px-6 lg:px-8">
           <div class="rounded-full bg-white/90 p-0.5 ring-1 shadow-lg shadow-neutral-800/5 ring-zinc-900/5 backdrop-blur-sm">
-            <NuxtImg src="/images/ZaneIcon.webp" placeholder loading="lazy" class="w-32 h-32 rounded-full bg-neutral-100 object-cover" />
+            <NuxtImg
+              src="/images/ZaneIcon.webp"
+              placeholder
+              placeholder-class="bg-neutral-200 animate-pulse"
+              loading="lazy"
+              class="w-32 h-32 rounded-full bg-neutral-100 object-cover" />
           </div>
           <p class="text-2xl">Connect with me on social media.</p>
         </div>

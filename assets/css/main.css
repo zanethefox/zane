@@ -125,3 +125,22 @@
     @apply bg-background text-foreground;
     }
 }
+
+.v-popper--theme-zane .v-popper__inner {
+    @apply bg-neutral-900/95 text-white px-5 py-3 rounded-full shadow-lg backdrop-blur-md;
+}
+
+.v-popper--theme-zane .v-popper__arrow-outer {
+    @apply border-neutral-900/95;
+}
+
+.v-popper__popper.v-popper__popper--show-from .v-popper__wrapper {
+    @apply scale-80 translate-y-3 opacity-0;
+}
+
+.v-popper__popper.v-popper__popper--show-to .v-popper__wrapper {
+    @apply transition scale-100 opacity-100
+}
+.v-popper__popper.v-popper__popper--hide-to .v-popper__wrapper {
+    @apply transition scale-80 translate-y-3 opacity-0;
+}

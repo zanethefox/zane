@@ -1,4 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useSeoMeta({
+  title: 'Contact Me — ZaneTheFox.com',
+  ogTitle: 'Contact Me — ZaneTheFox.com',
+  description: 'Get in touch with Zane for collaborations, photos, or a friendly hello. Reach out through social media or email.',
+  ogDescription: 'Get in touch with Zane for collaborations, photos, or a friendly hello. Reach out through social media or email.'
+});
+</script>
 
 <template>
   <div>
