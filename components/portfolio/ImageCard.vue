@@ -22,8 +22,13 @@ onMounted(() => {
     lightbox.value = new PhotoSwipeLightbox({
       gallery: '.image-grid',
       children: 'a',
-      pswpModule: () => import('photoswipe')
+      pswpModule: () => import('photoswipe'),
+      padding: { top: 24, right: 0, bottom: 24, left: 0 },
+      arrowPrev: false,
+      arrowNext: false,
+      wheelToZoom: true
     });
+
     lightbox.value.init();
   }
 });
