@@ -70,20 +70,26 @@ watch(isOpen, (open) => {
 </script>
 
 <template>
-  <div class="absolute right-0 left-0 z-40 pt-14">
+  <div class="fixed top-0 right-0 left-0 z-40 pt-14">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:max-w-none">
         <div class="flex items-center justify-between">
-          <NuxtLink aria-label="Home" href="/" :class="{ 'text-white transition': isOpen }">ZaneTheFox</NuxtLink>
+          <NuxtLink aria-label="Home" href="/" class="effect-shine text-lg" :class="{ 'text-white transition': isOpen }">ZaneTheFox</NuxtLink>
           <div class="flex items-center gap-x-8">
             <NuxtLink
               class="inline-flex rounded-full px-4 py-1.5 text-sm font-semibold transition"
-              :class="{ 'bg-neutral-950 text-white hover:bg-neutral-800': !isOpen, 'text-neutral-900 bg-white': isOpen }"
+              :class="{
+                'relative inline-flex items-center justify-center px-4 py-[calc(--spacing(2)-1px)] rounded-full border border-transparent bg-neutral-950/90 hover:bg-neutral-950 ring-1 shadow-md ring-neutral-500/15 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_2px_1px_#ffffff4d] text-base font-medium whitespace-nowrap text-white data-disabled:bg-white/15 data-disabled:opacity-40 data-hover:bg-white/20':
+                  !isOpen,
+                'relative inline-flex items-center justify-center px-4 py-[calc(--spacing(2)-1px)] rounded-full border border-transparent bg-white/15 hover:bg-white/10 ring-1 shadow-md ring-neutral-950/10 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_2px_1px_#ffffff4d] text-base font-medium whitespace-nowrap text-white data-disabled:bg-white/15 data-disabled:opacity-40 data-hover:bg-white/20':
+                  isOpen
+              }"
               href="/socials"
               ><span>Socials</span></NuxtLink
             ><button
               type="button"
-              class="group -m-2.5 rounded-full p-2.5 transition hover:bg-neutral-950/10"
+              class="group -m-2.5 rounded-full p-3.5 transition backdrop-blur-md"
+              :class="{ 'hover:bg-white/10': isOpen, 'hover:bg-white/60 bg-white/50': !isOpen }"
               aria-label="Toggle navigation"
               @click="toggleMenu">
               <div class="w-5 h-5 flex justify-center items-center flex-wrap">
@@ -101,7 +107,7 @@ watch(isOpen, (open) => {
     <div
       v-show="isOpen"
       ref="drawer"
-      :class="['overflow-hidden w-full absolute right-0 left-0 z-30', isDragging ? '' : 'transition-all duration-500']">
+      :class="['overflow-hidden w-full fixed top-0 right-0 left-0 z-30', isDragging ? '' : 'transition-all duration-500']">
       <div class="bg-neutral-950/95 backdrop-blur-md backdrop-saturate-125 m-1 rounded-3xl pt-36 pb-14">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-none">
@@ -152,5 +158,21 @@ watch(isOpen, (open) => {
 .drawer-enter-from,
 .drawer-leave-to {
   transform: translateY(-100%);
+}
+
+a.effect-shine:hover {
+  -webkit-mask-image: linear-gradient(-75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%);
+  -webkit-mask-size: 200%;
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  from {
+    -webkit-mask-position: 150%;
+  }
+
+  to {
+    -webkit-mask-position: -50%;
+  }
 }
 </style>

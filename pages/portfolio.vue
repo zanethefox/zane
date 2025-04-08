@@ -4,6 +4,13 @@ import { portfolioItems } from '~/composables/portfolio';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+useSeoMeta({
+  title: 'Portfolio — ZaneTheFox.com',
+  ogTitle: 'Portfolio — ZaneTheFox.com',
+  description: 'Explore Zane’s photography portfolio featuring fursuit portraits, furry convention moments, and creative shots.',
+  ogDescription: 'Explore Zane’s photography portfolio featuring fursuit portraits, furry convention moments, and creative shots.'
+});
+
 const selectedCategory = ref<string | null>(null);
 const selectedFursuiter = ref<string>('');
 const sortOrder = ref<'newest' | 'oldest'>('newest');

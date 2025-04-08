@@ -33,9 +33,9 @@ const footerMenu = mainMenu.filter((item) => !item.children);
             <NuxtLink
               v-for="s in socialLinks"
               :key="s.name"
+              v-tooltip="{ content: s.name, theme: 'zane' }"
               :href="s.url"
               target="_blank"
-              :title="s.name"
               class="rounded-full p-2.5 transition text-neutral-800 hover:bg-neutral-950/10 text-lg flex">
               <Icon :name="s.icon" class="flex h-6 w-6" />
             </NuxtLink>
@@ -44,7 +44,13 @@ const footerMenu = mainMenu.filter((item) => !item.children);
           <div class="text-xs text-neutral-500">&copy; {{ new Date().getFullYear() }} ZaneTheFox :3</div>
         </div>
 
-        <NuxtImg src="/images/ZaneChibiSwitch.webp" placeholder loading="lazy" class="w-32 h-32 object-cover hidden sm:block" />
+        <NuxtImg
+          v-tooltip="{ content: 'uwu', theme: 'zane' }"
+          src="/images/ZaneChibiSwitch.webp"
+          placeholder
+          placeholder-class="bg-neutral-200 animate-pulse"
+          loading="lazy"
+          class="w-32 h-32 object-cover hidden sm:block" />
       </div>
     </div>
   </footer>

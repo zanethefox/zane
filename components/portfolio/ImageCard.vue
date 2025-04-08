@@ -46,6 +46,7 @@ onUnmounted(() => {
     <a :key="image.src" :href="image.src" :data-pswp-width="image.width" :data-pswp-height="image.height" data-cropped="true">
       <NuxtImg
         placeholder
+        placeholder-class="bg-neutral-200 animate-pulse"
         loading="lazy"
         sizes="100vw sm:400px md:600px"
         :src="image.src"

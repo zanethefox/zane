@@ -10,5 +10,6 @@ export const mainMenu: MenuItem[] = [
   { title: 'Home', href: '/' },
   { title: 'Portfolio', href: '/portfolio' },
   { title: 'Socials', href: '/socials' },
+  { title: 'Ref sheet', href: '/ref-sheet' },
   { title: 'Contact', href: '/contact' }
 ];
