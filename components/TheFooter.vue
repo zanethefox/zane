@@ -7,7 +7,7 @@ const footerMenu = mainMenu.filter((item) => !item.children);
 
 <template>
   <footer>
-    <div class="bg-neutral-100/95 border border-neutral-200 backdrop-blur-md backdrop-saturate-125 m-1 rounded-3xl py-14">
+    <div class="bg-neutral-100/95 border border-neutral-200 backdrop-blur-md backdrop-saturate-125 m-1 rounded-3xl py-14 mt-24">
       <div class="mx-auto max-w-7xl px-6 lg:px-8 flex justify-between items-center">
         <div class="max-w-2xl lg:max-w-none flex flex-col gap-8">
           <nav class="flex flex-row flex-wrap gap-6">
