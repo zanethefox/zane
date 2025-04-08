@@ -5,6 +5,7 @@ import { portfolioItems } from '~/composables/portfolio';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const selectedCategory = ref<string | null>(null);
+const selectedFursuiter = ref<string>('');
 const sortOrder = ref<'newest' | 'oldest'>('newest');
 
 const categories = computed(() => {
@@ -12,11 +13,20 @@ const categories = computed(() => {
   return [...new Set(all)];
 });
 
+const fursuiters = computed(() => {
+  const all = portfolioItems.flatMap((item) => (Array.isArray(item.fursuiters) ? item.fursuiters.map((f) => f.name) : []));
+  return [...[...new Set(all)]];
+});
+
 const filteredItems = computed(() => {
   let items = [...portfolioItems];
 
   if (selectedCategory.value) {
     items = items.filter((item) => item.categories.includes(selectedCategory.value!));
+  }
+
+  if (selectedFursuiter.value && selectedFursuiter.value !== 'none') {
+    items = items.filter((item) => item.fursuiters?.some((f) => f.name === selectedFursuiter.value));
   }
 
   items.sort((a, b) => {
@@ -35,31 +45,50 @@ const filteredItems = computed(() => {
       <div class="mx-auto max-w-2xl lg:max-w-none">
         <div class="max-w-3xl">
           <h1 class="font-d text-4xl font-medium tracking-tight [text-wrap:balance] text-neutral-950 sm:text-5xl">Portfolio</h1>
+        </div>
 
-          <div class="mt-6 flex flex-wrap items-center gap-4">
-            <div class="flex flex-wrap items-center gap-2">
+        <div class="mt-6 flex flex-nowrap items-center justify-between">
+          <div class="flex w-fit overflow-hidden relative">
+            <div class="flex overflow-y-scroll snap-x gap-2 pe-5">
               <button
                 v-for="category in categories"
                 :key="category"
-                class="px-3 py-1 rounded-full border text-sm transition"
-                :class="selectedCategory === category ? 'bg-neutral-800 text-white' : 'bg-neutral-100 hover:bg-neutral-200'"
+                class="px-4 py-2 rounded-full border text-sm transition snap-center"
+                :class="selectedCategory === category ? 'bg-neutral-900 border-neutral-900 text-white' : 'bg-white hover:bg-neutral-100'"
                 @click="selectedCategory = category === selectedCategory ? null : category">
                 {{ category }}
               </button>
+
+              <!-- Fursuiter Select Menu -->
+              <Select v-model="selectedFursuiter">
+                <SelectTrigger class="px-4 pe-3 py-2 rounded-full border text-sm transition shadow-none !h-auto hover:bg-neutral-100">
+                  <SelectValue placeholder="Fursuiter" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="none">All</SelectItem>
+                    <SelectItem v-for="fursuiter in fursuiters" :key="fursuiter" :value="fursuiter">
+                      {{ fursuiter }}
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
 
-            <Select v-model="sortOrder">
-              <SelectTrigger>
-                <SelectValue placeholder="Sort by date" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="oldest">Oldest First</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <div class="bg-linear-to-r from-white/0 to-white h-full w-5 absolute end-0" />
           </div>
+
+          <Select v-model="sortOrder">
+            <SelectTrigger class="px-4 pe-3 py-2 rounded-full border text-sm transition shadow-none !h-auto hover:bg-neutral-100">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="newest">Newest</SelectItem>
+                <SelectItem value="oldest">Oldest</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>
