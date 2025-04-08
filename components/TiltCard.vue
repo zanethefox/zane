@@ -27,10 +27,10 @@ onMounted(() => {
   <div>
     <NuxtLink :to="link" class="flex flex-col gap-4">
       <div ref="cardRef" class="relative hover:drop-shadow-2xl transition-shadow duration-250 rounded-3xl overflow-hidden img-border">
-        <NuxtImg ref="cardRef" placeholder loading="lazy" :src="image" :alt="label" class="w-full aspect-2/3 object-cover" />
+        <NuxtImg placeholder loading="lazy" :src="image" :alt="label" class="w-full lg:aspect-2/3 aspect-square object-cover" />
       </div>
 
-      <span class="text-2xl">{{ label }}</span>
+      <span class="text-xl">{{ label }}</span>
     </NuxtLink>
   </div>
 </template>
