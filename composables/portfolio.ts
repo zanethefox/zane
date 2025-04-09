@@ -231,8 +231,8 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: 17,
     src: '/images/portfolio/nfc-2025/shizah/shizah-3.jpg',
-    width: 1365,
-    height: 2048,
+    width: 2048,
+    height: 1365,
     date: '2025-12-21T12:00:00Z',
     name: 'Portrait of Shizah',
     description: 'Portrait of Shizah',
