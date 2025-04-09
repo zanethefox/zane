@@ -73,11 +73,21 @@ watch(isOpen, (open) => {
   <div class="fixed top-0 right-0 left-0 z-40 pt-14">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:max-w-none">
-        <div class="flex items-center justify-between">
-          <NuxtLink aria-label="Home" href="/" class="effect-shine text-lg" :class="{ 'text-white transition': isOpen }">ZaneTheFox</NuxtLink>
+        <div class="flex items-center justify-between transition">
+          <NuxtLink
+            aria-label="Home"
+            href="/"
+            class="p-3 -mx-3 effect-shine rounded-xl relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.75)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms]"
+            :class="{
+              'text-white transition before:!bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.1)_50%,transparent_75%,transparent_100%)]':
+                isOpen,
+              'bg-white/80 backdrop-blur-lg saturate-150 delay-150': !isOpen
+            }"
+            ><span class="text-lg">ZaneTheFox</span></NuxtLink
+          >
           <div class="flex items-center gap-x-8">
             <NuxtLink
-              class="inline-flex rounded-full px-4 py-1.5 text-sm font-semibold transition"
+              class="inline-flex rounded-full px-4 py-1.5 text-sm font-semibold transition backdrop-blur-md"
               :class="{
                 'relative inline-flex items-center justify-center px-4 py-[calc(--spacing(2)-1px)] rounded-full border border-transparent bg-neutral-950/90 hover:bg-neutral-950 ring-1 shadow-md ring-neutral-500/15 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_2px_1px_#ffffff4d] text-base font-medium whitespace-nowrap text-white data-disabled:bg-white/15 data-disabled:opacity-40 data-hover:bg-white/20':
                   !isOpen,
@@ -89,7 +99,7 @@ watch(isOpen, (open) => {
             ><button
               type="button"
               class="group -m-2.5 rounded-full p-3.5 transition backdrop-blur-md"
-              :class="{ 'hover:bg-white/10': isOpen, 'hover:bg-white/60 bg-white/50': !isOpen }"
+              :class="{ 'hover:bg-white/10': isOpen, 'hover:bg-white/60 bg-white/80 saturate-150': !isOpen }"
               aria-label="Toggle navigation"
               @click="toggleMenu">
               <div class="w-5 h-5 flex justify-center items-center flex-wrap">
@@ -160,19 +170,19 @@ watch(isOpen, (open) => {
   transform: translateY(-100%);
 }
 
-a.effect-shine:hover {
-  -webkit-mask-image: linear-gradient(-75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%);
-  -webkit-mask-size: 200%;
+.effect-shine:hover span {
+  mask-image: linear-gradient(-75deg, rgba(0, 0, 0, 0.6) 30%, #000 50%, rgba(0, 0, 0, 0.6) 70%);
+  mask-size: 200%;
   animation: shine 2s infinite;
 }
 
 @keyframes shine {
   from {
-    -webkit-mask-position: 150%;
+    mask-position: 150%;
   }
 
   to {
-    -webkit-mask-position: -50%;
+    mask-position: -50%;
   }
 }
 </style>

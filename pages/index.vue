@@ -13,7 +13,7 @@ useSeoMeta({
 
 <template>
   <div>
-    <div class="mx-auto max-w-7xl px-6 lg:px-8 mt-36 md:mt-56">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8 mt-44 md:mt-56">
       <div class="mx-auto max-w-2xl lg:max-w-none">
         <div class="max-w-3xl">
           <h1 class="font-d text-4xl font-medium tracking-tight [text-wrap:balance] text-neutral-950 sm:text-5xl break-normal">
