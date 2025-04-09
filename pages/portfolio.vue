@@ -55,12 +55,14 @@ const filteredItems = computed(() => {
         </div>
 
         <div class="mt-6 flex flex-nowrap items-center justify-between">
-          <div class="flex w-fit overflow-hidden relative">
-            <div class="flex overflow-y-scroll snap-x gap-2 pe-5">
+          <div class="flex overflow-hidden -ms-4 ps-4 md:ps-3">
+            <div class="bg-linear-to-r from-white to-white/0 h-10 w-5 -ms-4 z-10" />
+
+            <div class="flex overflow-y-scroll snap-x -ms-4 ps-4 pe-4">
               <button
                 v-for="category in categories"
                 :key="category"
-                class="px-4 py-2 rounded-full border text-sm transition snap-center"
+                class="px-4 py-2 rounded-full border text-sm transition snap-center me-2"
                 :class="selectedCategory === category ? 'bg-neutral-900 border-neutral-900 text-white' : 'bg-white hover:bg-neutral-100'"
                 @click="selectedCategory = category === selectedCategory ? null : category">
                 {{ category }}
@@ -68,7 +70,8 @@ const filteredItems = computed(() => {
 
               <!-- Fursuiter Select Menu -->
               <Select v-model="selectedFursuiter">
-                <SelectTrigger class="px-4 pe-3 py-2 rounded-full border text-sm transition shadow-none !h-auto hover:bg-neutral-100">
+                <SelectTrigger
+                  class="px-4 pe-3 py-2 rounded-full border text-sm transition shadow-none !h-auto hover:bg-neutral-100 snap-center me-2">
                   <SelectValue placeholder="Fursuiter" />
                 </SelectTrigger>
                 <SelectContent>
@@ -82,7 +85,7 @@ const filteredItems = computed(() => {
               </Select>
             </div>
 
-            <div class="bg-linear-to-r from-white/0 to-white h-full w-5 absolute end-0" />
+            <div class="bg-linear-to-r from-white/0 to-white h-10 w-5 -ms-4 z-10" />
           </div>
 
           <Select v-model="sortOrder">

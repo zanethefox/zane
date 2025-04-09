@@ -15,6 +15,10 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en'
       }
+    },
+    pageTransition: {
+      name: 'page',
+      mode: 'out-in'
     }
   },
   css: ['~/assets/css/main.css'],

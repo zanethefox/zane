@@ -7,6 +7,17 @@
     touch-action: none;
 }
 
+.page-enter-active,
+.page-leave-active {
+    transition: all 0.35s;
+}
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+    filter: blur(0.25rem);
+    transform: translateY(0.25rem);
+}
+
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
