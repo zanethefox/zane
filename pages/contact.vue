@@ -62,11 +62,11 @@ const handleClick = async (text: string) => {
               <span ref="emailRef" class="text-neutral-900 md:text-3xl text-2xl me-auto break-all">paws@zanethefox.com</span>
             </div>
             <div class="flex flex-col md:p-8 p-6 gap-4">
-              <GlowyButton size="lg" @click="handleClick('hello@zanefox.com')">
+              <GlowyButton size="lg" @click="handleClick('paws@zanethefox.com')">
                 <span v-text="isCopied ? 'owo' : 'Copy'" />
               </GlowyButton>
 
-              <GlowyButton size="lg" tag="a" href="mailto:zanethefox.com" theme="light">
+              <GlowyButton size="lg" tag="a" href="mailto:paws@zanethefox.com" theme="light">
                 <span v-text="'Open mail client'" />
               </GlowyButton>
             </div>
