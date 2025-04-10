@@ -43,6 +43,7 @@ export default defineNuxtConfig({
     componentDir: './components/ui'
   },
   routeRules: {
+    '/blog': { ssr: false },
     '/blog/**': { ssr: false },
     // Redirects
     '/qr': { redirect: '/socials?utm_source=qr_code&utm_medium=qr_code&utm_campaign=badge' },
