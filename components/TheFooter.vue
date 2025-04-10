@@ -3,10 +3,20 @@ import { mainMenu } from '@/composables/menu';
 import { socialLinks } from '@/composables/socials';
 
 const footerMenu = mainMenu.filter((item) => !item.children);
+
+const cookieConsentRef = ref(null);
+
+const openCookieModal = () => {
+  if (cookieConsentRef.value) {
+    cookieConsentRef.value.openModal();
+  }
+};
 </script>
 
 <template>
   <footer>
+    <CookieConsent ref="cookieConsentRef" />
+
     <div class="bg-neutral-100/95 border border-neutral-200 backdrop-blur-md backdrop-saturate-125 m-1 rounded-3xl py-14 mt-24">
       <div class="mx-auto max-w-7xl px-6 lg:px-8 flex justify-between items-center">
         <div class="max-w-2xl lg:max-w-none flex flex-col gap-8">
@@ -41,7 +51,13 @@ const footerMenu = mainMenu.filter((item) => !item.children);
             </NuxtLink>
           </nav>
 
-          <div class="text-xs text-neutral-500">&copy; {{ new Date().getFullYear() }} ZaneTheFox :3</div>
+          <div class="flex gap-4">
+            <span class="text-xs text-neutral-500">&copy; {{ new Date().getFullYear() }} ZaneTheFox :3</span>
+            <a href="javascript:void(0)" class="text-xs text-neutral-500 hover:underline hover:text-neutral-800" @click="openCookieModal">
+              Cookie Preferences
+            </a>
+            <NuxtLink to="/privacy" class="text-xs text-neutral-500 hover:underline hover:text-neutral-800">Privacy</NuxtLink>
+          </div>
         </div>
 
         <NuxtImg
