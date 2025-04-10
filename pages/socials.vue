@@ -21,7 +21,7 @@ useSeoMeta({
               loading="lazy"
               class="w-32 h-32 rounded-full bg-neutral-100 object-cover" />
           </div>
-          <p class="text-2xl">Connect with me on social media.</p>
+          <p class="text-2xl text-center">Connect with me on social media.</p>
         </div>
         <div class="flex flex-col gap-4">
           <GlowyButton v-for="s in socialLinks" :key="s.name" tag="a" :href="s.url" target="_blank" size="lg">

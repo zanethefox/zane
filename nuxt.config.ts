@@ -6,7 +6,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   nitro: {
     prerender: {
-      autoSubfolderIndex: false
+      autoSubfolderIndex: false,
+      crawlLinks: true
     }
   },
   router: {

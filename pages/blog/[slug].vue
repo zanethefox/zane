@@ -54,9 +54,17 @@ watchEffect(() => {
       </template>
       <template v-else>
         <div class="empty-page">
-          <h1>Page Not Found</h1>
-          <p>Oops! The content you're looking for doesn't exist.</p>
-          <NuxtLink to="/">Go back home</NuxtLink>
+          <section class="max-w-3xl mx-auto px-4 py-12 prose prose-lg md:prose-xl dark:prose-invert">
+            <article class="mt-24 sm:mt-32 lg:mt-40">
+              <header class="mx-auto flex max-w-5xl flex-col">
+                <h1 class="mt-10 font-display text-4xl font-medium tracking-tight [text-wrap:balance] text-neutral-950 sm:text-5xl">
+                  Page Not Found
+                </h1>
+                <p class="text-lg text-neutral-600">Oops! The content you're looking for doesn't exist.</p>
+                <NuxtLink to="/" class="underline text-neutral-600 hover:text-neutral-900">Go back home</NuxtLink>
+              </header>
+            </article>
+          </section>
         </div>
       </template>
     </ClientOnly>
