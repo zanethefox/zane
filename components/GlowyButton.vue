@@ -28,24 +28,18 @@ const themeClasses = {
     'relative inline-flex items-center justify-center rounded-full border border-transparent bg-white/15 ring-1 shadow-md ring-neutral-100 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_2px_1px_#ffffff] whitespace-nowrap text-gray-950 data-disabled:bg-white/15 data-disabled:opacity-40 hover:bg-neutral-100'
 }[theme];
 
-const x = ref(0);
-const y = ref(0);
-const glowVisible = ref(false);
-
-function updateGlow(e: MouseEvent) {
-  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-  x.value = e.clientX - rect.left;
-  y.value = e.clientY - rect.top;
-  glowVisible.value = true;
-}
-
-function hideGlow() {
-  glowVisible.value = false;
-}
+const { x, y, glowVisible, updateGlow, hideGlow } = useGlowEffect();
 </script>
 
 <template>
-  <component :is="tag" :class="[sizeClasses, themeClasses]" class="" @mousemove="updateGlow" @mouseleave="hideGlow">
+  <component
+    :is="tag"
+    :class="[sizeClasses, themeClasses]"
+    class=""
+    @mousemove="updateGlow"
+    @mouseleave="hideGlow"
+    @focus="glowVisible = true"
+    @blur="glowVisible = false">
     <span class="relative z-10">
       <slot />
     </span>

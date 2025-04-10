@@ -2,6 +2,7 @@
   <span class="inline-flex items-center gap-1">
     <NuxtLink
       :href="href"
+      :rel="!isInternal ? 'noopener noreferrer' : undefined"
       :target="isInternal ? target || undefined : '_blank'"
       class="inline font-normal underline-offset-4 transition text-neutral-900 hover:text-neutral-700 hover:underline">
       <slot />
@@ -14,7 +15,7 @@
         width="16"
         height="16"
         @error="showFallbackFavicon = true" />
-      <span v-else class="text-sm">↗</span>
+      <span v-else class="text-sm" aria-label="External link">↗</span>
     </template>
   </span>
 </template>

@@ -44,7 +44,13 @@ useSeoMeta({
             Our website uses favicons provided by DuckDuckGo. These favicons are fetched from DuckDuckGo's servers rather than directly from websites.
             DuckDuckGo's service does not track you, create unique cookies, or collect any personal data. This service is part of our commitment to
             maintaining a privacy-first experience on our website. You can learn more about DuckDuckGo
-            <NuxtLink to="https://duckduckgo.com/duckduckgo-help-pages/privacy/favicons/" target="_blank" class="underline">here</NuxtLink>
+            <NuxtLink
+              href="https://duckduckgo.com/duckduckgo-help-pages/privacy/favicons/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline"
+              >here</NuxtLink
+            >
           </p>
           <p class="text-neutral-600">
             Please note that, while favicons are served by DuckDuckGo, no personal information is collected or shared during this process.

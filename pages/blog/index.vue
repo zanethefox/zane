@@ -11,20 +11,7 @@ useSeoMeta({
   ogDescription: 'Check out blog posts ranging from gear reviews, technology, mechanical keyboards, and—of course—coffee culture.'
 });
 
-const x = ref(0);
-const y = ref(0);
-const glowVisible = ref(false);
-
-function updateGlow(e: MouseEvent) {
-  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-  x.value = e.clientX - rect.left;
-  y.value = e.clientY - rect.top;
-  glowVisible.value = true;
-}
-
-function hideGlow() {
-  glowVisible.value = false;
-}
+const { x, y, glowVisible, updateGlow, hideGlow } = useGlowEffect();
 </script>
 
 <template>
@@ -44,7 +31,12 @@ function hideGlow() {
       <div class="mx-auto max-w-2xl lg:max-w-none">
         <div class="max-w-3xl gap-8 flex flex-col">
           <article v-for="post in posts" :key="post.id" class="md:grid md:grid-cols-4 md:items-baseline">
-            <div class="md:col-span-3 group relative flex flex-col items-start" @mousemove="updateGlow" @mouseleave="hideGlow">
+            <div
+              class="md:col-span-3 group relative flex flex-col items-start"
+              @mousemove="updateGlow"
+              @mouseleave="hideGlow"
+              @focus="glowVisible = true"
+              @blur="glowVisible = false">
               <h2 class="text-base font-semibold tracking-tight text-neutral-800 dark:text-neutral-100">
                 <div
                   class="border border-transparent ring-1 ring-neutral-100 after:absolute after:inset-0 after:rounded-2xl after:shadow-[inset_0_0_2px_1px_#ffffff] whitespace-nowrap absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-neutral-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl">
