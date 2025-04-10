@@ -44,10 +44,9 @@ function checkHash() {
 }
 
 function toggleHighlight(event: MouseEvent) {
-  // Check if the clicked element is part of the paragraph or its children
-  const target = event.target as HTMLElement;
-  if (!el.value?.contains(target) && target !== el.value) return;
-  if (!hash.value) return;
+  if (event.target.tagName !== 'P') {
+    return;
+  }
 
   if (isHighlighted.value) {
     const newQuery = { ...route.query };
