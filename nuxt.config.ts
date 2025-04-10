@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-04-10',
   devtools: { enabled: true },
   nitro: {
+    preset: 'cloudflare',
     prerender: {
       autoSubfolderIndex: false
     }
