@@ -2,11 +2,12 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+  compatibilityDate: '2025-04-10',
   devtools: { enabled: true },
   nitro: {
     prerender: {
-      autoSubfolderIndex: false
+      autoSubfolderIndex: false,
+      crawlLinks: true
     }
   },
   app: {
@@ -36,5 +37,11 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './components/ui'
+  },
+  routeRules: {
+    //'/blog/**': { ssr: false },
+    // Redirects
+    '/qr': { redirect: '/socials?utm_source=qr_code&utm_medium=qr_code&utm_campaign=badge' },
+    '/boop': { redirect: '/socials?utm_source=boop&utm_medium=nfc_tap&utm_campaign=badge' }
   }
 });
