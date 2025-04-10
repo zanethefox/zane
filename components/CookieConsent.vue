@@ -8,7 +8,7 @@ const showModal = ref(false);
 const categories = ref({
   essential: true,
   analytics: false,
-  marketing: false,
+  media: false,
   preferences: false
 });
 
@@ -26,7 +26,7 @@ function acceptAll() {
   categories.value = {
     essential: true,
     analytics: true,
-    marketing: true,
+    media: true,
     preferences: true
   };
   saveConsent();
@@ -36,7 +36,7 @@ function declineAll() {
   categories.value = {
     essential: true,
     analytics: false,
-    marketing: false,
+    media: false,
     preferences: false
   };
   saveConsent();

@@ -4,7 +4,7 @@ export function useConsent() {
   const consent = useCookie<{
     essential: boolean;
     analytics: boolean;
-    marketing: boolean;
+    media: boolean;
     preferences: boolean;
   }>('cookieConsent');
 
