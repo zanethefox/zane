@@ -10,8 +10,8 @@ export default defineNuxtPlugin(() => {
     document.head.appendChild(script);
 
     window.dataLayer = window.dataLayer || [];
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
+    function gtag() {
+      dataLayer.push(arguments);
     }
 
     gtag('js', new Date());
