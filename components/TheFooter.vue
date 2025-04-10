@@ -51,7 +51,7 @@ const openCookieModal = () => {
             </NuxtLink>
           </nav>
 
-          <div class="flex gap-4">
+          <div class="flex flex-wrap gap-4">
             <span class="text-xs text-neutral-500">&copy; {{ new Date().getFullYear() }} ZaneTheFox :3</span>
             <a href="javascript:void(0)" class="text-xs text-neutral-500 hover:underline hover:text-neutral-800" @click="openCookieModal">
               Cookie Preferences

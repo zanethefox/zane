@@ -5,18 +5,38 @@ import { useCookie } from '#app';
 const showBanner = ref(false);
 const showModal = ref(false);
 
-const categories = ref({
-  essential: true,
-  analytics: false,
-  media: false,
-  preferences: false
-});
+const categoryDefinitions = {
+  essential: {
+    name: 'Essential',
+    description: 'Required for the site to function properly. Cannot be disabled.',
+    required: true
+  },
+  analytics: {
+    name: 'Analytics',
+    description: 'Helps us understand how you use the site to improve it.'
+  },
+  media: {
+    name: 'Media',
+    description: 'Allows embedding content like YouTube videos or maps.'
+  },
+  preferences: {
+    name: 'Preferences',
+    description: 'Saves your settings and preferences across visits.'
+  }
+};
+
+const categories = ref(Object.fromEntries(Object.entries(categoryDefinitions).map(([key, def]) => [key, def.required || false])));
 
 const consentCookie = useCookie('cookieConsent', { maxAge: 60 * 60 * 24 * 365 });
 
 onMounted(() => {
-  if (consentCookie.value) {
-    categories.value = consentCookie.value;
+  const cookie = consentCookie.value;
+  if (cookie && typeof cookie === 'object') {
+    for (const key in categories.value) {
+      if (key in cookie && !categoryDefinitions[key]?.required) {
+        categories.value[key] = cookie[key];
+      }
+    }
   } else {
     showBanner.value = true;
   }
@@ -99,31 +119,46 @@ watch(showModal, (open) => {
   </div>
 
   <Transition name="cookie-modal">
-    <div v-if="showModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center" @click.self="closeModal">
-      <div class="inner bg-white/95 dark:bg-neutral-900 rounded-3xl p-8 w-full max-w-md shadow-xl">
-        <div class="flex flex-col gap-3 mb-8">
+    <div
+      v-if="showModal"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-end md:items-center justify-center p-2"
+      @click.self="closeModal">
+      <div class="inner bg-white/95 dark:bg-neutral-900 rounded-3xl w-full max-w-md max-h-full shadow-xl overflow-scroll">
+        <div class="flex flex-col gap-3 p-8 pb-0">
           <h2 class="text-xl font-bold text-neutral-800 dark:text-white">Cookie Preferences</h2>
           <p class="text-neutral-500">
             This site uses cookies to enhance your experience. Here you can either can accept all cookies or customise your preferences.
           </p>
         </div>
 
-        <div class="flex flex-col gap-3 mb-8">
-          <div v-for="(enabled, key) in categories" :key="key" class="flex items-center justify-between">
-            <span class="capitalize text-neutral-800 dark:text-neutral-200">{{ key }}</span>
+        <div class="flex flex-col gap-4 p-8 pb-4">
+          <div v-for="(enabled, key) in categories" :key="key" class="flex justify-between gap-5">
+            <div class="flex flex-col">
+              <span class="font-medium text-neutral-800 dark:text-neutral-200">
+                {{ categoryDefinitions[key]?.name || key }}
+              </span>
+              <span class="text-sm text-neutral-500 dark:text-neutral-400">
+                {{ categoryDefinitions[key]?.description }}
+              </span>
+            </div>
+
             <Switch
               :model-value="enabled"
-              :disabled="key === 'essential'"
-              class="ml-auto"
+              :disabled="categoryDefinitions[key]?.required"
+              class="mt-2"
               @update:model-value="(value) => (categories[key] = value)" />
           </div>
         </div>
 
-        <div class="flex gap-2 justify-between">
-          <button class="cursor-pointer text-neutral-600 hover:text-neutral-900 underline" @click="closeModal">Cancel</button>
-          <button class="cursor-pointer bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 rounded-full" @click="saveConsent">
-            Save Preferences
-          </button>
+        <div class="flex flex-col sticky bottom-0">
+          <div class="bg-gradient-to-t from-white to-transparent h-4 flex w-full" />
+
+          <div class="flex gap-2 justify-between bg-white p-8 pb-4 pt-2">
+            <button class="cursor-pointer text-neutral-600 hover:text-neutral-900 underline" @click="closeModal">Cancel</button>
+            <button class="cursor-pointer bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 rounded-full" @click="saveConsent">
+              Save Preferences
+            </button>
+          </div>
         </div>
       </div>
     </div>
