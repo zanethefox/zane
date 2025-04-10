@@ -44,8 +44,8 @@ export default defineNuxtConfig({
     componentDir: './components/ui'
   },
   routeRules: {
-    '/blog': { ssr: false },
-    '/blog/**': { ssr: false },
+    //'/blog': { ssr: false },
+    //'/blog/**': { ssr: false },
     // Redirects
     '/qr': { redirect: '/socials?utm_source=qr_code&utm_medium=qr_code&utm_campaign=badge' },
     '/boop': { redirect: '/socials?utm_source=boop&utm_medium=nfc_tap&utm_campaign=badge' }
