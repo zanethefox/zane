@@ -11,5 +11,6 @@ export const mainMenu: MenuItem[] = [
   { title: 'Portfolio', href: '/portfolio' },
   { title: 'Socials', href: '/socials' },
   { title: 'Ref sheet', href: '/ref-sheet' },
+  { title: 'Blog', href: '/blog' },
   { title: 'Contact', href: '/contact' }
 ];

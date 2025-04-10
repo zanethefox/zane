@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useClipboard } from '@vueuse/core';
 import { createTooltip, destroyTooltip } from 'floating-vue';
+import { formatBytes } from '~/lib/formatBytes';
 
 useSeoMeta({
   title: 'Reference sheet — ZaneTheFox.com',
@@ -20,6 +21,16 @@ const aboutInfo = [
   { label: 'Drinks', value: 'Coffee, monster' }
 ];
 
+const attachments = [
+  {
+    fileName: 'zane_ref_sheet.png',
+    url: '/images/ref-sheet/zane-reference-sheet.png',
+    fileSize: 1296487,
+    icon: 'majesticons:attachment',
+    download: true
+  }
+];
+
 const zaneInventory = [
   { label: 'Switch', src: 'switch.png' },
   { label: 'Games', src: 'games.png' },
@@ -32,7 +43,7 @@ const zaneInventory = [
 const zaneAccs = [{ label: 'Anklet', src: 'anklet.png' }];
 
 const outfitTypes = ref(['casual', 'pink'] as const);
-const outfitType = ref<(typeof outfitTypes.value)[number]>('casual');
+const outfitType = ref<(typeof outfitTypes.value)[number]>('pink');
 
 const allOutfits = [
   {
@@ -210,21 +221,23 @@ const handleClick = async (colour: string, event: MouseEvent) => {
                   </div>
                   <dd class="mt-2 text-sm text-neutral-900 sm:col-span-2 sm:mt-0">
                     <ul role="list" class="divide-y divide-black/10 rounded-md outline outline-black/10">
-                      <li class="flex items-center justify-between py-4 pr-5 pl-4 text-sm/6">
+                      <li v-for="(item, index) in attachments" :key="index" class="flex items-center justify-between py-4 pr-5 pl-4 text-sm/6">
                         <div class="flex w-0 flex-1 items-center">
-                          <Icon name="majesticons:attachment" class="size-5 shrink-0 text-neutral-400" />
+                          <Icon :name="item.icon" class="size-5 shrink-0 text-neutral-400" />
                           <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                            <span class="truncate font-medium">reference_sheet.png</span>
-                            <span class="shrink-0 text-neutral-400">1.26mb</span>
+                            <span v-tooltip="{ content: item.fileName, theme: 'zane' }" class="truncate font-medium" v-text="item.fileName" />
+                            <span v-if="item.fileSize" class="shrink-0 text-neutral-400" v-text="formatBytes(item.fileSize)" />
                           </div>
                         </div>
                         <div class="ml-4 shrink-0">
                           <a
-                            href="/images/ref-sheet/zane-reference-sheet.png"
-                            download
-                            class="font-medium text-neutral-900 hover:text-neutral-950 hover:underline"
-                            >Download</a
-                          >
+                            :href="item.url"
+                            :download="item.download ? item.fileName : undefined"
+                            :target="item.download ? undefined : '_blank'"
+                            :rel="item.download ? undefined : 'noopener'"
+                            class="font-medium text-neutral-900 hover:text-neutral-950 hover:underline">
+                            {{ item.download ? 'Download' : 'Visit' }}
+                          </a>
                         </div>
                       </li>
                     </ul>
@@ -306,10 +319,13 @@ const handleClick = async (colour: string, event: MouseEvent) => {
 
                 <!-- Larger col -->
                 <div
-                  class="lg:col-span-7 relative flex w-full flex-col rounded-2xl bg-white/50 outline outline-black/5 dark:bg-neutral-950 p-7 py-4 pb-7 gap-6 mb-auto">
+                  class="lg:col-span-7 relative flex w-full flex-col rounded-2xl bg-white/50 outline outline-black/5 dark:bg-neutral-950 p-7 py-4 pb-7 gap-4 mb-auto">
                   <!-- Outfits -->
                   <div class="flex flex-row justify-between gap-2 text-start">
-                    <p class="text-sm text-neutral-500">Outfits</p>
+                    <div class="flex flex-col">
+                      <p class="text-sm text-neutral-500">Outfits</p>
+                      <p class="text-[0.65rem] text-neutral-500/80">Choose or combine</p>
+                    </div>
 
                     <!-- Toggle -->
                     <div class="flex gap-1 rounded-full bg-neutral-950/5 p-1" role="tablist" aria-orientation="horizontal">
@@ -320,10 +336,10 @@ const handleClick = async (colour: string, event: MouseEvent) => {
                         class="group flex items-center rounded-full px-4 text-sm/7 font-medium transition"
                         :class="{
                           'bg-white ring-2 ring-neutral-950/5': outfitType === option,
-                          'text-neutral-600 hover:bg-neutral-100': outfitType !== option
+                          'text-neutral-600 hover:bg-white/50': outfitType !== option
                         }"
                         role="tab"
-                        aria-selected="outfitType === option"
+                        :aria-selected="outfitType === option"
                         @click="outfitType = option">
                         {{ option.charAt(0).toUpperCase() + option.slice(1) }}
                       </button>

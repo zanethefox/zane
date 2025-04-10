@@ -8,7 +8,7 @@ const showModal = ref(false);
 const categories = ref({
   essential: true,
   analytics: false,
-  marketing: false,
+  media: false,
   preferences: false
 });
 
@@ -26,7 +26,7 @@ function acceptAll() {
   categories.value = {
     essential: true,
     analytics: true,
-    marketing: true,
+    media: true,
     preferences: true
   };
   saveConsent();
@@ -36,7 +36,7 @@ function declineAll() {
   categories.value = {
     essential: true,
     analytics: false,
-    marketing: false,
+    media: false,
     preferences: false
   };
   saveConsent();
@@ -63,6 +63,14 @@ function closeModal() {
 defineExpose({
   openModal
 });
+
+watch(showModal, (open) => {
+  if (open) {
+    document.body.classList.add('no-scroll');
+  } else {
+    document.body.classList.remove('no-scroll');
+  }
+});
 </script>
 
 <template>
@@ -77,9 +85,13 @@ defineExpose({
             <NuxtLink to="/privacy" class="underline">privacy policy</NuxtLink>.
           </div>
           <div class="flex gap-2 justify-end">
-            <button class="px-6 py-3 underline" @click="openModal">Customise</button>
-            <button class="bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 text-sm rounded-full" @click="declineAll">Decline</button>
-            <button class="bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 text-sm rounded-full" @click="acceptAll">Accept All</button>
+            <button class="cursor-pointer px-6 py-3 underline rounded-full" @click="openModal">Customise</button>
+            <button class="cursor-pointer bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 text-sm rounded-full" @click="declineAll">
+              Decline
+            </button>
+            <button class="cursor-pointer bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 text-sm rounded-full" @click="acceptAll">
+              Accept All
+            </button>
           </div>
         </div>
       </div>
@@ -87,7 +99,7 @@ defineExpose({
   </div>
 
   <Transition name="cookie-modal">
-    <div v-if="showModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div v-if="showModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center" @click.self="closeModal">
       <div class="inner bg-white/95 dark:bg-neutral-900 rounded-3xl p-8 w-full max-w-md shadow-xl">
         <div class="flex flex-col gap-3 mb-8">
           <h2 class="text-xl font-bold text-neutral-800 dark:text-white">Cookie Preferences</h2>
@@ -108,8 +120,10 @@ defineExpose({
         </div>
 
         <div class="flex gap-2 justify-between">
-          <button class="text-neutral-600 hover:text-neutral-900 underline" @click="closeModal">Cancel</button>
-          <button class="bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 rounded-full" @click="saveConsent">Save Preferences</button>
+          <button class="cursor-pointer text-neutral-600 hover:text-neutral-900 underline" @click="closeModal">Cancel</button>
+          <button class="cursor-pointer bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 rounded-full" @click="saveConsent">
+            Save Preferences
+          </button>
         </div>
       </div>
     </div>
