@@ -47,6 +47,10 @@ function toggleHighlight(event: MouseEvent) {
   if (event.target.tagName !== 'P') {
     return;
   }
+  if (!el.value || !hash.value) {
+    return;
+  }
+  if (isHighlighted.value) {
 
   if (isHighlighted.value) {
     const newQuery = { ...route.query };
