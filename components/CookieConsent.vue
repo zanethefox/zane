@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useCookie } from '#app';
 
 const showBanner = ref(false);
-const showModal = ref(false);
+const isOpen = ref(false);
 
 const categoryDefinitions = {
   essential: {
@@ -65,7 +65,7 @@ function declineAll() {
 function saveConsent() {
   consentCookie.value = categories.value;
   showBanner.value = false;
-  showModal.value = false;
+  isOpen.value = false;
 
   if (import.meta.client) {
     window.location.reload();
@@ -73,18 +73,64 @@ function saveConsent() {
 }
 
 function openModal() {
-  showModal.value = true;
+  isOpen.value = true;
 }
 
 function closeModal() {
-  showModal.value = false;
+  isOpen.value = false;
 }
 
 defineExpose({
   openModal
 });
 
-watch(showModal, (open) => {
+// Draggy owo
+let startY = 0;
+let currentY = 0;
+const drawer = ref<HTMLElement | null>(null);
+const threshold = 100;
+const isDragging = ref(false);
+
+function onDragStart(e: MouseEvent | TouchEvent) {
+  isDragging.value = true;
+  startY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+  window.addEventListener('mousemove', onDragging);
+  window.addEventListener('mouseup', onDragEnd);
+  window.addEventListener('touchmove', onDragging);
+  window.addEventListener('touchend', onDragEnd);
+}
+
+function onDragging(e: MouseEvent | TouchEvent) {
+  currentY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+  const delta = currentY - startY;
+
+  if (drawer.value) {
+    // Invert the translation direction: dragging down should now open, dragging up should close
+    drawer.value.style.transform = `translateY(${isOpen.value ? Math.max(0, delta) : Math.min(300, delta + 300)}px)`;
+  }
+}
+
+function onDragEnd() {
+  const delta = currentY - startY;
+
+  // Adjust threshold logic to detect the swipe direction
+  if (Math.abs(delta) > threshold) {
+    isOpen.value = delta < 0; // Now we open the drawer when swiping down
+  }
+
+  if (drawer.value) {
+    drawer.value.style.transform = '';
+  }
+
+  isDragging.value = false;
+
+  window.removeEventListener('mousemove', onDragging);
+  window.removeEventListener('mouseup', onDragEnd);
+  window.removeEventListener('touchmove', onDragging);
+  window.removeEventListener('touchend', onDragEnd);
+}
+
+watch(isOpen, (open) => {
   if (open) {
     document.body.classList.add('no-scroll');
   } else {
@@ -99,7 +145,7 @@ watch(showModal, (open) => {
       <div v-if="showBanner">
         <div
           class="max-w-4xl mx-auto flex flex-col gap-4 bg-white/80 p-8 backdrop-blur-lg rounded-t-3xl transition duration-700 ease"
-          :class="{ 'translate-y-100': showModal, 'translate-y-0': !showModal }">
+          :class="{ 'translate-y-100': isOpen, 'translate-y-0': !isOpen }">
           <div class="text-sm text-neutral-800">
             This site uses cookies to enhance your experience. You can accept all cookies or customise your preferences. See the
             <NuxtLink to="/privacy" class="underline">privacy policy</NuxtLink>.
@@ -120,44 +166,49 @@ watch(showModal, (open) => {
 
   <Transition name="cookie-modal">
     <div
-      v-if="showModal"
-      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-end md:items-center justify-center p-2"
+      v-if="isOpen"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex flex-row items-end md:items-center justify-center p-2"
       @click.self="closeModal">
-      <div class="inner bg-white/95 dark:bg-neutral-900 rounded-3xl w-full max-w-md max-h-full shadow-xl overflow-scroll">
-        <div class="flex flex-col gap-3 p-8 pb-0">
-          <h2 class="text-xl font-bold text-neutral-800 dark:text-white">Cookie Preferences</h2>
-          <p class="text-neutral-500">
-            This site uses cookies to enhance your experience. Here you can either can accept all cookies or customise your preferences.
-          </p>
+      <div ref="drawer" class="inner flex max-h-full flex-col" :class="[isDragging ? '' : 'duration-500']">
+        <div class="p-2 py-14 -my-12 z-10 w-full flex justify-center items-center" @mousedown="onDragStart" @touchstart="onDragStart">
+          <div class="w-8 h-1.5 bg-neutral-950/35 backdrop-blur-md rounded-full z-40" />
         </div>
-
-        <div class="flex flex-col gap-4 p-8 pb-4">
-          <div v-for="(enabled, key) in categories" :key="key" class="flex justify-between gap-5">
-            <div class="flex flex-col">
-              <span class="font-medium text-neutral-800 dark:text-neutral-200">
-                {{ categoryDefinitions[key]?.name || key }}
-              </span>
-              <span class="text-sm text-neutral-500 dark:text-neutral-400">
-                {{ categoryDefinitions[key]?.description }}
-              </span>
-            </div>
-
-            <Switch
-              :model-value="enabled"
-              :disabled="categoryDefinitions[key]?.required"
-              class="mt-2"
-              @update:model-value="(value) => (categories[key] = value)" />
+        <div class="bg-white/95 dark:bg-neutral-900 rounded-3xl w-full max-w-md max-h-full shadow-xl overflow-scroll">
+          <div class="flex flex-col gap-3 p-8 pb-0">
+            <h2 class="text-xl font-bold text-neutral-800 dark:text-white">Cookie Preferences</h2>
+            <p class="text-neutral-500">
+              This site uses cookies to enhance your experience. Here you can either can accept all cookies or customise your preferences.
+            </p>
           </div>
-        </div>
 
-        <div class="flex flex-col sticky bottom-0">
-          <div class="bg-gradient-to-t from-white to-transparent h-4 flex w-full" />
+          <div class="flex flex-col gap-4 p-8 pb-4">
+            <div v-for="(enabled, key) in categories" :key="key" class="flex justify-between gap-5">
+              <div class="flex flex-col">
+                <span class="font-medium text-neutral-800 dark:text-neutral-200">
+                  {{ categoryDefinitions[key]?.name || key }}
+                </span>
+                <span class="text-sm text-neutral-500 dark:text-neutral-400">
+                  {{ categoryDefinitions[key]?.description }}
+                </span>
+              </div>
 
-          <div class="flex gap-2 justify-between bg-white p-8 pb-4 pt-2">
-            <button class="cursor-pointer text-neutral-600 hover:text-neutral-900 underline" @click="closeModal">Cancel</button>
-            <button class="cursor-pointer bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 rounded-full" @click="saveConsent">
-              Save Preferences
-            </button>
+              <Switch
+                :model-value="enabled"
+                :disabled="categoryDefinitions[key]?.required"
+                class="mt-2"
+                @update:model-value="(value) => (categories[key] = value)" />
+            </div>
+          </div>
+
+          <div class="flex flex-col sticky bottom-0">
+            <div class="bg-gradient-to-t from-white to-transparent h-4 flex w-full transition duration-700 ease" />
+
+            <div class="flex gap-2 justify-between bg-white p-8 pb-4 pt-2">
+              <button class="cursor-pointer text-neutral-600 hover:text-neutral-900 underline" @click="closeModal">Cancel</button>
+              <button class="cursor-pointer bg-neutral-900 hover:bg-neutral-700 text-white px-6 py-3 rounded-full" @click="saveConsent">
+                Save Preferences
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -193,7 +244,7 @@ watch(showModal, (open) => {
 
 .cookie-modal-enter-from .inner,
 .cookie-modal-leave-to .inner {
-  transform: translateY(2rem) scale(0.98);
+  transform: translateY(100%) scale(0.98);
   opacity: 0;
 }
 </style>

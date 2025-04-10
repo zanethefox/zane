@@ -137,7 +137,7 @@ watch(isOpen, (open) => {
           </div>
         </div>
       </div>
-      <div class="p-2 w-full flex justify-center items-center" @mousedown="onDragStart" @touchstart="onDragStart">
+      <div class="relative p-2 py-14 -my-12 z-40 w-full flex justify-center items-center" @mousedown="onDragStart" @touchstart="onDragStart">
         <div class="w-8 h-1.5 bg-neutral-950/35 backdrop-blur-md rounded-full z-40" />
       </div>
     </div>
