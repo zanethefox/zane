@@ -46,6 +46,10 @@ function saveConsent() {
   consentCookie.value = categories.value;
   showBanner.value = false;
   showModal.value = false;
+
+  if (import.meta.client) {
+    window.location.reload();
+  }
 }
 
 function openModal() {
