@@ -105,7 +105,6 @@ function onDragging(e: MouseEvent | TouchEvent) {
   const delta = currentY - startY;
 
   if (drawer.value) {
-    // Invert the translation direction: dragging down should now open, dragging up should close
     drawer.value.style.transform = `translateY(${isOpen.value ? Math.max(0, delta) : Math.min(300, delta + 300)}px)`;
   }
 }
@@ -113,9 +112,8 @@ function onDragging(e: MouseEvent | TouchEvent) {
 function onDragEnd() {
   const delta = currentY - startY;
 
-  // Adjust threshold logic to detect the swipe direction
   if (Math.abs(delta) > threshold) {
-    isOpen.value = delta < 0; // Now we open the drawer when swiping down
+    isOpen.value = delta < 0;
   }
 
   if (drawer.value) {
@@ -164,13 +162,14 @@ watch(isOpen, (open) => {
     </Transition>
   </div>
 
-  <Transition name="cookie-modal">
+  <Transition name="drawer">
     <div
-      v-if="isOpen"
-      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex flex-row items-end md:items-center justify-center p-2"
+      v-show="isOpen"
+      ref="drawer"
+      :class="['fixed inset-0 z-50 flex flex-row items-end md:items-center justify-center p-2', isDragging ? '' : 'transition-all duration-500']"
       @click.self="closeModal">
-      <div ref="drawer" class="inner flex max-h-full flex-col" :class="[isDragging ? '' : 'duration-500']">
-        <div class="p-2 py-14 -my-12 z-10 w-full flex justify-center items-center" @mousedown="onDragStart" @touchstart="onDragStart">
+      <div class="flex max-h-full flex-col inner">
+        <div class="relative p-2 py-14 -my-12 z-40 w-full flex justify-center items-center" @mousedown="onDragStart" @touchstart="onDragStart">
           <div class="w-8 h-1.5 bg-neutral-950/35 backdrop-blur-md rounded-full z-40" />
         </div>
         <div class="bg-white/95 dark:bg-neutral-900 rounded-3xl w-full max-w-md max-h-full shadow-xl overflow-scroll">
@@ -214,6 +213,9 @@ watch(isOpen, (open) => {
       </div>
     </div>
   </Transition>
+  <Transition name="fade">
+    <div v-if="isOpen" class="fixed inset-0 bg-black/30 backdrop-blur-md transition-opacity z-40" />
+  </Transition>
 </template>
 
 <style scoped>
@@ -246,5 +248,25 @@ watch(isOpen, (open) => {
 .cookie-modal-leave-to .inner {
   transform: translateY(100%) scale(0.98);
   opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: transform 0.325s ease;
+  transform: translateY(0%);
+}
+
+.drawer-enter-from,
+.drawer-leave-to {
+  transform: translateY(100%);
 }
 </style>

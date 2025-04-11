@@ -5,7 +5,7 @@ export default defineNuxtPlugin(() => {
     ...FloatingVue.options.themes.tooltip,
     placement: 'top',
     triggers: ['click', 'hover'],
-    autoHide: false
+    autoHide: true
   };
   return;
 });

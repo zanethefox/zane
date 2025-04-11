@@ -24,7 +24,7 @@ watchEffect(() => {
   <div>
     <template v-if="post">
       <section class="max-w-3xl mx-auto px-4 py-12 prose prose-lg md:prose-xl dark:prose-invert">
-        <article class="mt-24 sm:mt-32 md:mt-40">
+        <article class="mt-28 sm:mt-32 md:mt-40">
           <header class="mx-auto flex max-w-5xl flex-col text-center">
             <time :dateTime="post.date" class="text-sm text-neutral-600 mb-6">
               {{ formatDate(post.date) }}
@@ -48,7 +48,7 @@ watchEffect(() => {
           </header>
         </article>
 
-        <ContentRenderer :value="post" class="mt-24 sm:mt-28 lg:mt-32" />
+        <ContentRenderer :value="post" class="mt-20 sm:mt-28 lg:mt-32" />
       </section>
     </template>
     <template v-else>
