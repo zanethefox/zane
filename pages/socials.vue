@@ -30,6 +30,15 @@ useSeoMeta({
               <span>{{ s.name }}</span>
             </div>
           </GlowyButton>
+
+          <NuxtLink to="/contact">
+            <GlowyButton theme="light" size="lg" class="w-full">
+              <div class="flex flex-row justify-center gap-2 items-center">
+                <Icon name="heroicons:at-symbol" class="w-5 h-5" />
+                <span>Email</span>
+              </div>
+            </GlowyButton>
+          </NuxtLink>
         </div>
         <div>
           <hr class="text-neutral-200 my-10" />
