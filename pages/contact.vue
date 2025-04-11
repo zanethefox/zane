@@ -42,7 +42,7 @@ const handleClick = async (text: string) => {
 const video = useTemplateRef<HTMLVideoElement>('videoRef');
 
 const { playing, currentTime, duration, muted } = useMediaControls(video, {
-  src: '/videos/zane_test_clip_handbrake.mp4'
+  src: '/videos/zane_clip_2.mp4'
 });
 
 onMounted(() => {
