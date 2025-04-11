@@ -70,10 +70,18 @@ watch(isOpen, (open) => {
 </script>
 
 <template>
-  <div class="fixed top-0 right-0 left-0 z-40 pt-14">
+  <div class="fixed top-0 right-0 left-0 z-40 mt-14">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:max-w-none">
-        <div class="flex items-center justify-between transition">
+      <div class="mx-auto max-w-2xl lg:max-w-none relative">
+        <div
+          :class="{
+            'absolute -inset-2 -inset-x-6 rounded-2xl bg-white/90 backdrop-blur-md pointer-events-none': !isOpen,
+            'opacity-0': isOpen,
+            'opacity-100': !isOpen,
+            'transition-opacity duration-500 ease-in-out delay-150': true
+          }" />
+
+        <div class="flex items-center justify-between transition z-40">
           <NuxtLink
             aria-label="Home"
             href="/"
@@ -81,7 +89,7 @@ watch(isOpen, (open) => {
             :class="{
               'text-white transition before:!bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.1)_50%,transparent_75%,transparent_100%)]':
                 isOpen,
-              'bg-white/80 backdrop-blur-lg saturate-150 delay-150': !isOpen
+              'delay-150': !isOpen
             }"
             ><span class="text-lg">ZaneTheFox</span></NuxtLink
           >
@@ -96,10 +104,11 @@ watch(isOpen, (open) => {
               }"
               href="/socials"
               ><span>Socials</span></NuxtLink
-            ><button
+            >
+            <button
               type="button"
-              class="group -m-2.5 rounded-full p-3.5 transition backdrop-blur-md"
-              :class="{ 'hover:bg-white/10': isOpen, 'hover:bg-white/60 bg-white/80 saturate-150': !isOpen }"
+              class="group -m-2.5 rounded-full p-3.5 transition cursor-pointer relative"
+              :class="{ 'hover:bg-white/10': isOpen, 'hover:bg-white/60': !isOpen }"
               aria-label="Toggle navigation"
               @click="toggleMenu">
               <div class="w-5 h-5 flex justify-center items-center flex-wrap">

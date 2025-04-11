@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const { tag, size, theme } = defineProps({
   tag: {
     type: String,
@@ -25,7 +23,7 @@ const sizeClasses = {
 const themeClasses = {
   dark: 'relative overflow-hidden rounded-full border-1 border-neutral-900 bg-neutral-900 text-white font-medium transition hover:bg-neutral-800 hover:text-shadow-black/10 text-shadow-lg active:scale-[0.98] ring-1 shadow-md ring-neutral-500/15 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_4px_1px_#ffffff4d]',
   light:
-    'relative inline-flex items-center justify-center rounded-full border border-transparent bg-white/15 ring-1 shadow-md ring-neutral-100 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_2px_1px_#ffffff] whitespace-nowrap text-gray-950 data-disabled:bg-white/15 data-disabled:opacity-40 hover:bg-neutral-100'
+    'relative inline-flex items-center justify-center rounded-full border border-transparent bg-white/15 ring-1 shadow-sm ring-neutral-100 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_2px_1px_#ffffff] transition active:scale-[0.98] whitespace-nowrap text-gray-950 data-disabled:bg-white/15 data-disabled:opacity-40 hover:bg-neutral-100'
 }[theme];
 
 const { x, y, glowVisible, updateGlow, hideGlow } = useGlowEffect();
@@ -34,7 +32,7 @@ const { x, y, glowVisible, updateGlow, hideGlow } = useGlowEffect();
 <template>
   <component
     :is="tag"
-    :class="[sizeClasses, themeClasses]"
+    :class="[sizeClasses, themeClasses, 'cursor-pointer']"
     class=""
     @mousemove="updateGlow"
     @mouseleave="hideGlow"
